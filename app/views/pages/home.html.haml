@@ -1,5 +1,5 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
-  %a.navbar-brand{:href => "#"} Navbar
+  %a.navbar-brand{:href => "#"} PR Ninja
   %button.navbar-toggler{"aria-controls" => "navbarsExampleDefault", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarsExampleDefault", "data-toggle" => "collapse", :type => "button"}
     %span.navbar-toggler-icon
   #navbarsExampleDefault.collapse.navbar-collapse
@@ -8,26 +8,37 @@
         %a.nav-link{:href => "#"}
           Home
           %span.sr-only (current)
-      %li.nav-item
-        %a.nav-link{:href => "#"} Link
-      %li.nav-item
-        %a.nav-link.disabled{:href => "#"} Disabled
-      %li.nav-item.dropdown
-        %a#dropdown01.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"} Dropdown
-        .dropdown-menu{"aria-labelledby" => "dropdown01"}
-          %a.dropdown-item{:href => "#"} Action
-          %a.dropdown-item{:href => "#"} Another action
-          %a.dropdown-item{:href => "#"} Something else here
     %form.form-inline.my-2.my-lg-0
       - if logged_in?
-        = link_to "Logout", logout_path, :method => :delete, :class => 'btn btn-primary'
+        %span.navbar-text Welcome back, #{current_user.name}!
+        = link_to "Logout", logout_path, :method => :delete, :class => 'btn btn-primary', :style => "margin-left: 10px;"
       - else
         %a{:href => "https://slack.com/oauth/authorize?client_id=#{Settings.slack.client_id}&team=#{Settings.slack.team_id}&scope=identity.basic&redirect_uri=#{Settings.server_url}/login"}
           %img{:alt => "Sign in with Slack", :height => "40", :src => "https://platform.slack-edge.com/img/sign_in_with_slack.png", :srcset => "https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x", :width => "172"}
-%main.container{:role => "main"}
+%main.container-fluid{:role => "main"}
   .starter-template
-    %h1 Bootstrap starter template
-    %p.lead
-      Use this document as a way to quickly start any new project.
-      %br/
-      All you get is this text and a mostly barebones HTML document.
+    %h1 Welcome to PR Ninja!
+    - if logged_in?
+      %p.lead
+        Here are all of your tagged PRs
+      %table.table.table-striped
+        %thead.thead-dark
+          %tr
+            %th{:scope => "col"} #
+            %th{:scope => "col"} User
+            %th{:scope => "col"} PR Link
+            %th{:scope => "col"} Description
+            %th{:scope => "col"} Tagged Users
+        %tbody
+          - @pull_requests.each_with_index do |pull_request, index|
+            %tr
+              %th{:scope => "row"}= index + 1
+              %td{:style => "white-space: nowrap;"}= pull_request.user.name || 'Unknown'
+              %td= pull_request.link
+              %td= pull_request.description
+              %td
+                - pull_request.users.each do |tagged_user|
+                  %span.badge.badge-dark= tagged_user.name
+    - else
+      %p.lead
+        Login to start enjoying automatic PR todos generated from this bot listening in to your repo's Slack channel.
