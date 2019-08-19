@@ -1,0 +1,102 @@
+version: '2'
+
+services:
+  nginx-server:
+    image: jwilder/nginx-proxy:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - back
+      - front
+
+  lets-encrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion:latest
+    container_name: lets-encrypt
+    restart: always
+    depends_on:
+      - nginx-server
+    volumes:
+      - ./certs:/etc/nginx/certs:rw
+    volumes_from:
+      - nginx-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - back
+      - front
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    networks:
+      - front
+      - back
+
+  postgres:
+    image: postgres:10
+    container_name: postgres
+    restart: always
+    volumes:
+      - /var/run/postgresql
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD:
+
+  pr-ninja-listener:
+    image: andbobsyouruncle/pr-ninja
+    command: bash -c "RAILS_ENV=production bundle exec rails runner 'SlackMessageService.start_listening'"
+    container_name: pr-ninja-listener
+    restart: always
+    depends_on:
+      - postgres
+    volumes_from:
+      - postgres
+    networks:
+      - front
+      - back
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+
+  pr-ninja:
+    image: andbobsyouruncle/pr-ninja
+    command: bash -c "rails-init && /sbin/my_init"
+    container_name: pr-ninja
+    restart: always
+    depends_on:
+      - postgres
+    volumes_from:
+      - postgres
+    networks:
+      - front
+      - back
+    environment:
+      - VIRTUAL_HOST=${PR_NINJA_HOSTNAME}
+      - VIRTUAL_PORT=443
+      - LETSENCRYPT_HOST=${PR_NINJA_HOSTNAME}
+      - LETSENCRYPT_EMAIL=${PR_NINJA_EMAIL}
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
+
+networks:
+  front:
+    external:
+      name: traffic_front
+  back:
+    external:
+      name: traffic_back

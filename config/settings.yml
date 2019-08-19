@@ -1,0 +1,25 @@
+defaults: &defaults
+  repo_partial: '<%= ENV.fetch('REPO_PARTIAL', '') %>'
+  redis_url: redis://localhost:6379/1
+  server_url: '<%= ENV.fetch('SERVER_URL', '') %>'
+  slack:
+    client_id: '<%= ENV.fetch('SLACK_CLIENT_ID', '') %>'
+    client_secret: '<%= ENV.fetch('SLACK_CLIENT_SECRET', '') %>'
+    team_id: '<%= ENV.fetch('SLACK_TEAM_ID', '') %>'
+    bot_access_token: '<%= ENV.fetch('SLACK_BOT_ACCESS_TOKEN', '') %>'
+    access_token: '<%= ENV.fetch('SLACK_ACCESS_TOKEN', '') %>'
+
+development:
+  <<: *defaults
+  server_url: https://02caaa27.ngrok.io
+
+test:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+  redis_url: redis://redis:6379/1
+
+production:
+  <<: *defaults
+  redis_url: redis://redis:6379/1

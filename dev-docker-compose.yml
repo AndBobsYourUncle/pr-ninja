@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - front
+      - back
+
+  postgres:
+    image: postgres:10
+    container_name: postgres
+    restart: always
+    volumes:
+      - /var/run/postgresql
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD:
+
+  pr-ninja-listener:
+    image: andbobsyouruncle/pr-ninja
+    command: bash -c "bundle exec rails runner 'SlackMessageService.start_listening'"
+    container_name: pr-ninja-listener
+    restart: always
+    depends_on:
+      - postgres
+    volumes_from:
+      - postgres
+
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
+
+networks:
+  front:
+    external:
+      name: traffic_front
+  back:
+    external:
+      name: traffic_back

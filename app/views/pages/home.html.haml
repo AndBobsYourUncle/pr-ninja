@@ -1,0 +1,33 @@
+%nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+  %a.navbar-brand{:href => "#"} Navbar
+  %button.navbar-toggler{"aria-controls" => "navbarsExampleDefault", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarsExampleDefault", "data-toggle" => "collapse", :type => "button"}
+    %span.navbar-toggler-icon
+  #navbarsExampleDefault.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      %li.nav-item.active
+        %a.nav-link{:href => "#"}
+          Home
+          %span.sr-only (current)
+      %li.nav-item
+        %a.nav-link{:href => "#"} Link
+      %li.nav-item
+        %a.nav-link.disabled{:href => "#"} Disabled
+      %li.nav-item.dropdown
+        %a#dropdown01.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "http://example.com"} Dropdown
+        .dropdown-menu{"aria-labelledby" => "dropdown01"}
+          %a.dropdown-item{:href => "#"} Action
+          %a.dropdown-item{:href => "#"} Another action
+          %a.dropdown-item{:href => "#"} Something else here
+    %form.form-inline.my-2.my-lg-0
+      - if logged_in?
+        = link_to "Logout", logout_path, :method => :delete, :class => 'btn btn-primary'
+      - else
+        %a{:href => "https://slack.com/oauth/authorize?client_id=#{Settings.slack.client_id}&team=#{Settings.slack.team_id}&scope=identity.basic&redirect_uri=#{Settings.server_url}/login"}
+          %img{:alt => "Sign in with Slack", :height => "40", :src => "https://platform.slack-edge.com/img/sign_in_with_slack.png", :srcset => "https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x", :width => "172"}
+%main.container{:role => "main"}
+  .starter-template
+    %h1 Bootstrap starter template
+    %p.lead
+      Use this document as a way to quickly start any new project.
+      %br/
+      All you get is this text and a mostly barebones HTML document.
