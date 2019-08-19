@@ -29,16 +29,19 @@
             %th{:scope => "col"} PR Link
             %th{:scope => "col"} Description
             %th{:scope => "col"} Tagged Users
+            %th{:scope => "col"} Actions
         %tbody
           - @pull_requests.each_with_index do |pull_request, index|
             %tr
               %th{:scope => "row"}= index + 1
               %td{:style => "white-space: nowrap;"}= pull_request.user.name || 'Unknown'
-              %td= pull_request.link
+              %td{:style => "white-space: nowrap;"}= pull_request.link
               %td= pull_request.description
               %td
                 - pull_request.users.each do |tagged_user|
-                  %span.badge.badge-dark= tagged_user.name
+                  %span.badge.badge-dark{:style => "white-space: nowrap;"}= tagged_user.name
+              %td
+                = link_to "Mark Complete", mark_completed_pull_requests_tagged_user_path(pull_request.tagged_user(current_user)), :method => :put, :class => 'btn btn-primary btn-sm', :style => "white-space: nowrap;"
     - else
       %p.lead
         Login to start enjoying automatic PR todos generated from this bot listening in to your repo's Slack channel.

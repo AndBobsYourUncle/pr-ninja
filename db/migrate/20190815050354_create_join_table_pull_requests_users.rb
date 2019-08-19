@@ -1,8 +1,9 @@
 class CreateJoinTablePullRequestsUsers < ActiveRecord::Migration[5.2]
   def change
-    create_join_table :pull_requests, :users do |t|
-      t.index [:pull_request_id, :user_id]
-      t.index [:user_id, :pull_request_id]
+    create_table :pull_requests_tagged_users do |t|
+      t.references :user, foreign_key: true, index: true
+      t.references :pull_request, foreign_key: true, index: true
+      t.string :status, :string, default: 'active', index: true
     end
   end
 end
