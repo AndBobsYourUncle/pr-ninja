@@ -1,10 +1,16 @@
 class UserTagsController < ApplicationController
-  before_action :set_user_tag, only: [:mark_completed, :move]
+  before_action :set_user_tag, only: [:mark_complete, :mark_active]
 
-  def mark_completed
+  def mark_complete
     @user_tag.update_status!(:complete)
 
-    redirect_to root_path
+    redirect_back fallback_location: root_path
+  end
+
+  def mark_active
+    @user_tag.update_status!(:active)
+
+    redirect_back fallback_location: root_path
   end
 
   def move

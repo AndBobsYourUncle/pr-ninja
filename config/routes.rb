@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
   resources :user_tags, only: [] do
     member do
-      put :mark_completed
+      put :mark_complete
+      put :mark_active
       post :move
     end
   end
