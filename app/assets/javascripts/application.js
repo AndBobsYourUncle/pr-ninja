@@ -23,6 +23,10 @@
 
 //= require jquery-ui
 
+document.addEventListener('turbolinks:render', function(){
+  $('*[data-role=activerecord_sortable]').activerecord_sortable();
+});
+
 $(document).ready(function(){
   $('*[data-role=activerecord_sortable]').activerecord_sortable();
 });
