@@ -6,3 +6,5 @@ rake db:migrate
 chown -R app:app /home/app/webapp
 
 rake assets:precompile
+
+nohup bundle exec rails runner 'SlackMessageService.start_listening' &>/dev/null &

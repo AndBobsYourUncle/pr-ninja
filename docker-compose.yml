@@ -53,27 +53,27 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD:
 
-  pr-ninja-listener:
-    image: andbobsyouruncle/pr-ninja
-    command: bash -c "RAILS_ENV=production bundle exec rails runner 'SlackMessageService.start_listening'"
-    container_name: pr-ninja-listener
-    restart: always
-    depends_on:
-      - postgres
-    volumes_from:
-      - postgres
-    networks:
-      - front
-      - back
-    environment:
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
-      - SLACK_CLIENT_ID=${SLACK_CLIENT_ID}
-      - SLACK_CLIENT_SECRET=${SLACK_CLIENT_SECRET}
-      - SLACK_TEAM_ID=${SLACK_TEAM_ID}
-      - SLACK_BOT_ACCESS_TOKEN=${SLACK_BOT_ACCESS_TOKEN}
-      - SLACK_ACCESS_TOKEN=${SLACK_ACCESS_TOKEN}
-      - SERVER_URL=${SERVER_URL}
-      - REPO_PARTIAL=${REPO_PARTIAL}
+  # pr-ninja-listener:
+  #   image: andbobsyouruncle/pr-ninja
+  #   command: bash -c "RAILS_ENV=production bundle exec rails runner 'SlackMessageService.start_listening'"
+  #   container_name: pr-ninja-listener
+  #   restart: always
+  #   depends_on:
+  #     - postgres
+  #   volumes_from:
+  #     - postgres
+  #   networks:
+  #     - front
+  #     - back
+  #   environment:
+  #     - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+  #     - SLACK_CLIENT_ID=${SLACK_CLIENT_ID}
+  #     - SLACK_CLIENT_SECRET=${SLACK_CLIENT_SECRET}
+  #     - SLACK_TEAM_ID=${SLACK_TEAM_ID}
+  #     - SLACK_BOT_ACCESS_TOKEN=${SLACK_BOT_ACCESS_TOKEN}
+  #     - SLACK_ACCESS_TOKEN=${SLACK_ACCESS_TOKEN}
+  #     - SERVER_URL=${SERVER_URL}
+  #     - REPO_PARTIAL=${REPO_PARTIAL}
 
   pr-ninja:
     image: andbobsyouruncle/pr-ninja
