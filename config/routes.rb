@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "/login", to: 'sessions#create', as: :login
   delete '/logout',  to: 'sessions#destroy', as: :logout
 
-  resources :pull_requests_tagged_users, only: [] do
+  resources :user_tags, only: [] do
     member do
       put :mark_completed
       post :move

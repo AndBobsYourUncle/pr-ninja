@@ -1,6 +1,6 @@
-class CreateJoinTablePullRequestsUsers < ActiveRecord::Migration[5.2]
+class CreateUserTags < ActiveRecord::Migration[5.2]
   def change
-    create_table :pull_requests_tagged_users do |t|
+    create_table :user_tags do |t|
       t.references :user, foreign_key: true, index: true
       t.references :pull_request, foreign_key: true, index: true
       t.integer :status, default: 0, index: true
@@ -8,6 +8,6 @@ class CreateJoinTablePullRequestsUsers < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
-    add_index :pull_requests_tagged_users, [:position]
+    add_index :user_tags, [:position]
   end
 end

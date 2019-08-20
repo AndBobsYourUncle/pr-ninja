@@ -1,7 +1,7 @@
-class PullRequestsTaggedUser < ApplicationRecord
+class UserTag < ApplicationRecord
   acts_as_sortable do |config|
     config[:append] = true
-    config[:relation] = ->(instance) {instance.user.pull_requests_tagged_users.where(status: instance.status) }
+    config[:relation] = ->(instance) {instance.user.user_tags.where(status: instance.status) }
   end
 
   belongs_to :user

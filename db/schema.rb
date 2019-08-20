@@ -25,17 +25,17 @@ ActiveRecord::Schema.define(version: 2019_08_15_050354) do
     t.index ["user_id"], name: "index_pull_requests_on_user_id"
   end
 
-  create_table "pull_requests_tagged_users", force: :cascade do |t|
+  create_table "user_tags", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "pull_request_id"
     t.integer "status", default: 0
     t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["position"], name: "index_pull_requests_tagged_users_on_position"
-    t.index ["pull_request_id"], name: "index_pull_requests_tagged_users_on_pull_request_id"
-    t.index ["status"], name: "index_pull_requests_tagged_users_on_status"
-    t.index ["user_id"], name: "index_pull_requests_tagged_users_on_user_id"
+    t.index ["position"], name: "index_user_tags_on_position"
+    t.index ["pull_request_id"], name: "index_user_tags_on_pull_request_id"
+    t.index ["status"], name: "index_user_tags_on_status"
+    t.index ["user_id"], name: "index_user_tags_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,6 +50,6 @@ ActiveRecord::Schema.define(version: 2019_08_15_050354) do
   end
 
   add_foreign_key "pull_requests", "users"
-  add_foreign_key "pull_requests_tagged_users", "pull_requests"
-  add_foreign_key "pull_requests_tagged_users", "users"
+  add_foreign_key "user_tags", "pull_requests"
+  add_foreign_key "user_tags", "users"
 end

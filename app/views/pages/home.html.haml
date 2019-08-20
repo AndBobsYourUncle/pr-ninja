@@ -14,7 +14,7 @@
             %th{:scope => "col"} Tagged Users
             %th{:scope => "col"} Actions
         %tbody{'data-role' => "activerecord_sortable"}
-          = render @tagged_prs
+          = render @user_tags
     - else
       %p.lead
         Login to start enjoying automatic PR todos generated from this bot listening in to your repo's Slack channel.

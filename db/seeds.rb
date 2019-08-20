@@ -50,7 +50,7 @@ end
   end
 end
 
-test_user.pull_requests_tagged_users.each_with_index do |tagged_pr, index|
+test_user.user_tags.each_with_index do |tagged_pr, index|
   next unless index % 3 == 0
 
   tagged_pr.reload
