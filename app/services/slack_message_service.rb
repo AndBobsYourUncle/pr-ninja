@@ -18,7 +18,7 @@ class SlackMessageService
       if has_pr_link?(message.text)
         process_pr_message(message)
       else
-        case message.text
+        case message.text.downcase
         when 'hi ninja' then
           client.web_client.chat_postMessage(channel: message.channel, text: "Hi <@#{message.user}>!")
         end
