@@ -18,7 +18,7 @@
             %tr{'data-role' => "user_tag#{user_tag.id}", 'data-move-url' => move_user_tag_url(user_tag), 'data-position' => user_tag.position}
               %th.sortable_index{:scope => "row"}= user_tag.position + 1
               %td{:style => "white-space: nowrap;"}= user_tag.pull_request.user.display_name
-              %td{:style => "white-space: nowrap;"}= user_tag.pull_request.link
+              %td{:style => "white-space: nowrap;"}= link_to user_tag.pull_request.link, user_tag.pull_request.link, target: "_blank"
               %td= user_tag.pull_request.description
               %td
                 - user_tag.pull_request.tagged_users.each do |tagged_user|
