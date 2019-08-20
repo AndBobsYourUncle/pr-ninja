@@ -49,7 +49,7 @@ class SlackMessageService
     pr_users.each do |user|
       next if user.id == pr_user.id
 
-      pr.users << user unless pr.user_ids.include?(user.id)
+      pr.tagged_users << user unless pr.tagged_user_ids.include?(user.id)
     end
   end
 

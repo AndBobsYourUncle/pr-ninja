@@ -43,10 +43,10 @@ end
     user: pr_authors.sample
   )
 
-  pr.users << test_user
+  pr.tagged_users << test_user
 
   (1..2).each do |_num|
-    pr.users << tagged_users.sample
+    pr.tagged_users << tagged_users.sample
   end
 end
 
