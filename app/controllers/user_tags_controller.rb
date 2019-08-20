@@ -2,7 +2,7 @@ class UserTagsController < ApplicationController
   before_action :set_user_tag, only: [:mark_completed, :move]
 
   def mark_completed
-    @user_tag.update!(status: :complete)
+    @user_tag.update_status!(:complete)
 
     redirect_to root_path
   end
