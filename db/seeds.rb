@@ -36,7 +36,7 @@ tagged_users = (1..10).map do |num|
 end
 
 
-(1..10).each do |_num|
+(1..16).each do |_num|
   pr = PullRequest.create(
     link: "https://github.com/some/repo/pull/#{Faker::Number.number(digits: 4)}",
     description: Faker::Hipster.sentence(word_count: 10),
@@ -48,4 +48,12 @@ end
   (1..2).each do |_num|
     pr.users << tagged_users.sample
   end
+end
+
+test_user.pull_requests_tagged_users.each_with_index do |tagged_pr, index|
+  next unless index % 3 == 0
+
+  tagged_pr.reload
+
+  tagged_pr.update_status!(:complete)
 end

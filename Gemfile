@@ -58,6 +58,10 @@ gem 'rb-readline'
 
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
+gem 'activerecord-sortable'
+
+gem 'jquery-ui-rails' # if you plan to use drag and drop
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

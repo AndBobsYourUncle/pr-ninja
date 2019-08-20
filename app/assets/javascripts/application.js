@@ -17,3 +17,12 @@
 //= require popper
 //= require bootstrap
 //= require_tree .
+
+//= require jquery_ujs
+//= require sortable
+
+//= require jquery-ui
+
+$(document).ready(function(){
+  $('*[data-role=activerecord_sortable]').activerecord_sortable();
+});

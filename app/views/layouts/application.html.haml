@@ -8,4 +8,27 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      %a.navbar-brand{:href => "#"} PR Ninja
+      %button.navbar-toggler{"aria-controls" => "navbarsExampleDefault", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarsExampleDefault", "data-toggle" => "collapse", :type => "button"}
+        %span.navbar-toggler-icon
+      #navbarsExampleDefault.collapse.navbar-collapse
+        %ul.navbar-nav.mr-auto
+          %li.nav-item{:class => current_page?(root_path) ? "active" : ""}
+            %a.nav-link{:href => root_path}
+              Home
+              - if current_page?(root_path)
+                %span.sr-only (current)
+          %li.nav-item{:class => current_page?(completed_path) ? "active" : ""}
+            %a.nav-link{:href => completed_path}
+              Completed
+              - if current_page?(completed_path)
+                %span.sr-only (current)
+        %form.form-inline.my-2.my-lg-0
+          - if logged_in?
+            %span.navbar-text Welcome back, #{current_user.name}!
+            = link_to "Logout", logout_path, :method => :delete, :class => 'btn btn-primary', :style => "margin-left: 10px;"
+          - else
+            %a{:href => "https://slack.com/oauth/authorize?client_id=#{Settings.slack.client_id}&team=#{Settings.slack.team_id}&scope=identity.basic&redirect_uri=#{Settings.server_url}/login"}
+              %img{:alt => "Sign in with Slack", :height => "40", :src => "https://platform.slack-edge.com/img/sign_in_with_slack.png", :srcset => "https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x", :width => "172"}
     = yield

@@ -1,10 +1,14 @@
 class PullRequestsTaggedUsersController < ApplicationController
-  before_action :set_pull_requests_tagged_user, only: [:mark_completed]
+  before_action :set_pull_requests_tagged_user, only: [:mark_completed, :move]
 
   def mark_completed
     @pull_requests_tagged_user.update!(status: :complete)
 
     redirect_to root_path
+  end
+
+  def move
+    @pull_requests_tagged_user.move_to! params[:position]
   end
 
   private

@@ -28,11 +28,13 @@ ActiveRecord::Schema.define(version: 2019_08_15_050354) do
   create_table "pull_requests_tagged_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "pull_request_id"
-    t.string "status", default: "active"
-    t.string "string", default: "active"
+    t.integer "status", default: 0
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position"], name: "index_pull_requests_tagged_users_on_position"
     t.index ["pull_request_id"], name: "index_pull_requests_tagged_users_on_pull_request_id"
     t.index ["status"], name: "index_pull_requests_tagged_users_on_status"
-    t.index ["string"], name: "index_pull_requests_tagged_users_on_string"
     t.index ["user_id"], name: "index_pull_requests_tagged_users_on_user_id"
   end
 
