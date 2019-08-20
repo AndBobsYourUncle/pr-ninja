@@ -1,5 +1,5 @@
 %tr{'data-role' => "pull_requests_tagged_user#{pull_requests_tagged_user.id}", 'data-move-url' => move_pull_requests_tagged_user_url(pull_requests_tagged_user), 'data-position' => pull_requests_tagged_user.position}
-  %th{:scope => "row"}= pull_requests_tagged_user.position + 1
+  %th.sortable_index{:scope => "row"}= pull_requests_tagged_user.position + 1
   %td{:style => "white-space: nowrap;"}= pull_requests_tagged_user.pull_request.user.display_name
   %td{:style => "white-space: nowrap;"}= pull_requests_tagged_user.pull_request.link
   %td= pull_requests_tagged_user.pull_request.description

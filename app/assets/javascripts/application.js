@@ -25,8 +25,20 @@
 
 document.addEventListener('turbolinks:render', function(){
   $('*[data-role=activerecord_sortable]').activerecord_sortable();
+
+  $('*[data-role=activerecord_sortable]').on("sortable:sort_success", function() {
+    $('.sortable_index').each(function(index) {
+      $(this).text(index + 1);
+    });
+  });
 });
 
 $(document).ready(function(){
   $('*[data-role=activerecord_sortable]').activerecord_sortable();
+
+  $('*[data-role=activerecord_sortable]').on("sortable:sort_success", function() {
+    $('.sortable_index').each(function(index) {
+      $(this).text(index + 1);
+    });
+  });
 });
